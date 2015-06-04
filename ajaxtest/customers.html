@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JSON</title>
+	<script src="script.js"></script>
+	<style type="text/css">
+	h1 {
+		border-bottom: 3px solid #cc9900;
+		color: #996600;
+		font-size: 30px;
+
+	}
+	table, th, td {
+		border: 1px solid grey;
+		border-collapse: collapse;
+		padding: 5px;
+	}
+	table tr:nth-child(odd) {
+		background-color: #f1f1f1;
+		}
+	table tr:nth-child(even) {
+		background-color: #FFFFFF;
+	}
+
+	</style>
+</head>
+<body>
+	<h1>Customers</h1>
+	<div id="id01"></div>
+	<script>
+		var url = "http://jonsbook.dev/customers_mysql.php";
+		var xhr = new XMLHttpRequest();
+
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				console.log(xhr.responseText);
+				myFunction(xhr.responseText);
+			}
+		};
+
+		xhr.open("GET", url, true);
+		xhr.send();
+
+
+		function myFunction(response) {
+			var arr = JSON.parse(response);
+			console.log(arr);
+			
+
+			var out = "<table>";
+			for (var i = 0; i < arr.length; i++) {
+
+				out += "<tr><td>" +
+				arr[i].Name +
+				"</td><td>" +
+				arr[i].City +
+				"</td><td>" +
+				arr[i].Country +
+				"</td></tr>\n";	
+			}
+			out += "</table>";
+
+			document.getElementById("id01").innerHTML = out;
+		}
+
+	</script>
+	
+
+	<script src="//code.jquery.com/jquery-1.11.3.min.js">
+
+	</script>
+
+<!-- 	<script>
+		var obj = '{ "employees" : [' + 
+			'{"firstname": "John" , "lastname":"Doe"},' +
+			'{"firstname": "Antonio" , "lastname":"Jackson"},' +
+			'{"firstname": "Ricardo" , "lastname":"Jefferson"} ]}';
+
+
+		var string = JSON.stringify(obj);
+
+		var xhr = new XMLHttpRequest(), json;
+
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				var myArr = JSON.parse(xhr.responseText);
+
+				console.log(myArr);
+			}
+
+		};
+
+		xhr.open('GET', 'team.txt', true);
+		xhr.send();
+	</script> -->
+</body>
+</html>
